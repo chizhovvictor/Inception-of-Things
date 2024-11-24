@@ -1,52 +1,32 @@
-$scriptS = <<-SCRIPT
-apt-get update -y
-echo Installation of k3s server
-apt-get install curl -y
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --flannel-backend none --token 12345
-
-SCRIPT
-
-$scriptSW = <<-SCRIPT
-apt-get update -y
-echo installation of k3s agent
-apt-get install iputils-ping -y
-ping -c 4 192.168.56.110
-apt-get install curl -y
-SCRIPT
-
-
-
 Vagrant.configure("2") do |config|
 
-  # Define the first VM
+  # Define the first VM (k3s server)
   config.vm.define "vchizhovS" do |control|
     control.vm.box = "debian/bookworm64"
     control.vm.network "private_network", ip: "192.168.56.110"
     control.vm.provider "virtualbox" do |v|
-      v.memory = "512"
+      v.memory = "1024"
       v.cpus = 1
       v.name = "vchizhovS"
     end
 
     control.vm.hostname = "vchizhovS"
+    control.vm.provision "shell", path: "script/master.sh"
 
-    # Provision only this machine
-    control.vm.provision "shell", inline: $scriptS
   end
 
-  # Define the second VM
+  # Define the second VM (k3s agent)
   config.vm.define "vchizhovSW" do |control|
     control.vm.box = "debian/bookworm64"
     control.vm.network "private_network", ip: "192.168.56.111"
     control.vm.provider "virtualbox" do |v|
-      v.memory = "512"
+      v.memory = "1024"
       v.cpus = 1
       v.name = "vchizhovSW"
     end
 
     control.vm.hostname = "vchizhovSW"
-
-    control.vm.provision "shell", inline: $scriptSW
+    control.vm.provision "shell", path: "script/agent.sh"
   end
 end
 
