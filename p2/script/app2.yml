@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-one
+  name: app-two
   labels:
-    app: app-one
+    app: app-two
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: app-one
+      app: app-two
   template:
     metadata:
       labels:
-        app: app-one
+        app: app-two
     spec:
       containers:
-      - name: app-one
+      - name: app-two
         image: paulbouwer/hello-kubernetes:1.10
         env:
         - name: MESSAGE
-          value: "Hello from app1."
+          value: "Hello from app2."
         ports:
         - containerPort: 8080
 
@@ -27,10 +27,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-one
+  name: app-two
 spec:
   selector:
-    app: app-one
+    app: app-two
   ports:
   - protocol: TCP
     port: 80
@@ -42,16 +42,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-one-ingress
+  name: app-two-ingress
 spec:
   rules:
-  - host: app1.com
+  - host: app2.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: app-one
+            name: app-two
             port:
               number: 80

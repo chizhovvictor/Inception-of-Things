@@ -5,3 +5,5 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --flannel-iface eth1" sh
 
 
 sudo kubectl apply -f /vagrant/script/app1.yml
+sudo kubectl apply -f /vagrant/script/app2.yml
+sudo kubectl apply -f /vagrant/script/app3.yml
