@@ -31,3 +31,6 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 # Apply ArgoCD Application
 kubectl apply -n argocd -f confs/application.yaml
+
+# Forward Apllication to localhost
+kubectl port-forward svc/svc-wil 8888:8888 -n dev
