@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+
+# install kubernetes, check k3d
+
 set -e  # Stop the script if any command fails
 
 echo "🔍 Checking for existing K3D cluster"
@@ -35,7 +39,10 @@ if kubectl get pods -n argocd | grep -q 'argocd-server'; then
 else
   echo "🚀 Installing ArgoCD"
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  sleep 5
+  
   kubectl get pods -n argocd
+  sleep 5
 
   echo "⏳ Waiting for ArgoCD to be ready..."
   kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=500s
@@ -75,7 +82,6 @@ else
 fi
 
 echo "✅ Installation complete!"
-wait
 
 
 # установить lsof

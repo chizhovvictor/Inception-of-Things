@@ -7,7 +7,7 @@ echo "🧹 Delete port-forward..."
 pkill -f "kubectl port-forward" || true
 
 echo "🧹 Delete from ArgoCD..."
-kubectl delete -n argocd -f confs/application.yaml || true
+kubectl delete -n argocd -f ../confs/application.yaml || true
 
 echo "🧹 Delete ArgoCD..."
 kubectl delete namespace argocd --wait=true || true
