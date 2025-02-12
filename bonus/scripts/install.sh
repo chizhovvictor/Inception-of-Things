@@ -52,5 +52,8 @@ kubectl get application wil-playground -n argocd -o yaml | grep repoURL
 # Create repo in gitlab and copy data from github in gitlab
 
 # Download repo from gitlab
-git clone 
+git clone http://localhost:8083/root/vchizhov.git
+
+# Apply new configuration for argocd
+sudo kubectl apply -f ./conf/application.yaml
 
