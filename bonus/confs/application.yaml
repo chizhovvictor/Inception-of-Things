@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/chizhovvictor/vchizhov.git
+    repoURL: http://gitlab-webservice-default.gitlab.svc:8181/root/vchizhov.git
     path: manifests
     targetRevision: HEAD
   destination:
